@@ -1,6 +1,8 @@
 package com.futuapi.selfquantification.config;
 
+import com.futuapi.selfquantification.controller.StockMarketController;
 import com.futuapi.selfquantification.handler.StockWebSocketHandler;
+import jakarta.annotation.Resource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.socket.config.annotation.EnableWebSocket;
@@ -16,14 +18,12 @@ import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry
 @EnableWebSocket
 public class WebSocketConfig implements WebSocketConfigurer {
 
+    @Resource
+    private StockWebSocketHandler stockWebSocketHandler;
+
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-        registry.addHandler(stockWebSocketHandler(), "/api/stock")
+        registry.addHandler(stockWebSocketHandler, "/api/stock/stockMarket/stock/quote")
             .setAllowedOrigins("*");
-    }
-
-    @Bean
-    public StockWebSocketHandler stockWebSocketHandler() {
-        return new StockWebSocketHandler();
     }
 }

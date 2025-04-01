@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>股票行情</title>
+    <style>
+      .stock-item {
+        border: 1px solid #ddd;
+        padding: 15px;
+        margin: 10px;
+        border-radius: 5px;
+      }
+      .stock-item h3 {
+        margin-top: 0;
+        color: #333;
+      }
+    </style>
+</head>
+<body>
+
+    <h1>股票行情实时监控</h1>
+    <div class="control-panel">
+        <input type="text" id="stockCode" placeholder="股票代码">
+        <select id="marketId">
+            <option value="1">港股</option>
+            <option value="2">A股</option>
+        </select>
+        <button onclick="subscribeStock(
+            document.getElementById('stockCode').value,
+            document.getElementById('marketId').value
+        )">订阅</button>
+    </div>
+
+    <div id="stockData"></div>
+
+    <!-- 引入 JS 文件 -->
+    <script src="/js/StockDetailInfoPage.js"></script>
+
+</body>
+</html>

@@ -12,10 +12,12 @@ import com.futu.openapi.pb.QotSub.C2S;
 import com.futu.openapi.pb.QotSub.Request;
 import com.futu.openapi.pb.QotUpdateBasicQot.Response;
 import com.futuapi.selfquantification.enums.ErrorCodeEnum;
+import com.futuapi.selfquantification.event.StockQuoteEvent;
 import com.futuapi.selfquantification.handler.StockWebSocketHandler;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
 /**
@@ -27,7 +29,7 @@ import org.springframework.stereotype.Service;
 public class QueryStockInfoDetailService implements FTSPI_Qot, FTSPI_Conn {
 
     @Resource
-    private StockWebSocketHandler stockWebSocketHandler;
+    private ApplicationEventPublisher eventPublisher;
 
     @Resource
     private FTAPI_Conn_Qot qot;
@@ -73,7 +75,8 @@ public class QueryStockInfoDetailService implements FTSPI_Qot, FTSPI_Conn {
             //TODO： 做一层对象转换
             String json = JSON.toJSONString(response);
             // 发送更新消息给前端
-            stockWebSocketHandler.broadcastStockPrice(json);
+            eventPublisher.publishEvent(new StockQuoteEvent(json));
+            // stockWebSocketHandler.broadcastStockPrice(json);
             log.info("收到股票数据更新: {}", json);
         } catch (Exception e) {
             log.error("处理股票数据失败, response = {}",JSON.toJSONString(response), e);
