@@ -2,10 +2,12 @@ package com.futuapi.selfquantification.controller;
 
 import com.alibaba.fastjson2.JSON;
 import com.futuapi.selfquantification.enums.ErrorCodeEnum;
+import com.futuapi.selfquantification.service.QueryStockInfoDetailService;
 import com.futuapi.selfquantification.vo.ApiResponse;
 import com.futuapi.selfquantification.vo.StockInfoDetailVO;
 import com.futuapi.selfquantification.vo.request.QueryStockQuoteRequest;
 import io.micrometer.common.util.StringUtils;
+import jakarta.annotation.Resource;
 import java.util.Objects;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,8 +24,11 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 public class StockMarketController {
 
+    @Resource
+    private QueryStockInfoDetailService queryStockInfoDetailService;
+
     @RequestMapping(value = "/stock/quote", method = RequestMethod.GET)
-    public ApiResponse<StockInfoDetailVO> QueryStockQuote(@RequestParam QueryStockQuoteRequest request) {
+    public ApiResponse<Void> queryStockQuote(@RequestParam QueryStockQuoteRequest request) {
         if (Objects.isNull(request)) {
             return ApiResponse.error(ErrorCodeEnum.PARAM_ERROR);
         }
@@ -31,7 +36,8 @@ public class StockMarketController {
             return ApiResponse.error(ErrorCodeEnum.PARAM_ERROR);
         }
         try {
-
+            queryStockInfoDetailService.queryStockInfoDetail(request.getStockCode(), request.getMarketId());
+            return ApiResponse.success();
         } catch (Exception e) {
             log.error("StockMarketController QueryStockQuote error, request = {},", JSON.toJSONString(request), e);
         }

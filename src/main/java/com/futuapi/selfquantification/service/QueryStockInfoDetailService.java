@@ -57,7 +57,7 @@ public class QueryStockInfoDetailService implements FTSPI_Qot, FTSPI_Conn {
         return QotSub.Request.newBuilder().setC2S(c2s).build();
     }
 
-    public void QueryStockInfoDetail(String stockCode, int marketId) {
+    public void queryStockInfoDetail(String stockCode, int marketId) {
         Request request = buildQotSubRequest(stockCode, marketId);
         int seqNo = qot.sub(request);
     }
