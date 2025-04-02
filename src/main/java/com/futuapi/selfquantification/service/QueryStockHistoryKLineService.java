@@ -80,7 +80,7 @@ public class QueryStockHistoryKLineService implements FTSPI_Qot, FTSPI_Conn {
             .build();
         QotRequestHistoryKL.C2S c2s = QotRequestHistoryKL.C2S.newBuilder()
             .setRehabType(QotCommon.RehabType.RehabType_Forward_VALUE)
-            .setKlType(QotCommon.KLType.KLType_1Min_VALUE)
+            .setKlType(QotCommon.KLType.KLType_Day_VALUE)
             .setSecurity(sec)
             .setBeginTime(TimeUtils.secondTimestampToDateString(request.getStartTime()))
             .setEndTime(TimeUtils.secondTimestampToDateString(request.getEndTime()))

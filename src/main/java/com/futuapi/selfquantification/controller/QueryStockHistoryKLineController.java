@@ -31,14 +31,16 @@ public class QueryStockHistoryKLineController {
 
     @RequestMapping(value = "/history/kline", method = RequestMethod.POST)
     @ResponseBody
-    public ApiResponse<String> queryStockHistoryKLine(QueryStockHistoryKLineRequest request) {
+    public DeferredResult<String> queryStockHistoryKLine(QueryStockHistoryKLineRequest request) {
         // 参数校验
         if (Objects.isNull(request) || StringUtils.isBlank(request.getStockCode()) || Objects.isNull(request.getTimeType())) {
-            return ApiResponse.error(ErrorCodeEnum.PARAM_ERROR);
+            DeferredResult<String> errorResult = new DeferredResult<>();
+            errorResult.setResult(ErrorCodeEnum.PARAM_ERROR.getDesc());
+            return errorResult;
         }
 
         // 设置接口超时时间为400ms
-        DeferredResult<String> result = new DeferredResult<>(400L);
+        DeferredResult<String> result = new DeferredResult<>(40000L);
 
         String requestKey = String.format("%s_%s_%s", QueryStockHistoryKLineController.HISTORY_K_LINE_PREFIX, request.getStockCode(), "1");
 
@@ -53,9 +55,7 @@ public class QueryStockHistoryKLineController {
             queryStockHistoryKLineService.removePendingRequest(requestKey);
             result.setErrorResult(ResponseEntity.status(ErrorCodeEnum.TIME_OUT.getCode()).body("Timeout"));
         });
-
-        String resultResult = (String) result.getResult();
-        return ApiResponse.success(resultResult);
+        return result;
     }
 
 }
