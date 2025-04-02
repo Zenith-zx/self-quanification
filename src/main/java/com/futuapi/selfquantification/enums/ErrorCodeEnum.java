@@ -11,6 +11,8 @@ public enum ErrorCodeEnum {
 
     SUCCESS(0, "success"),
     PARAM_ERROR(1, "param error"),
+
+    TIME_OUT(2, "time out"),
     SYSTEM_ERROR(500, "system error")
     ;
 

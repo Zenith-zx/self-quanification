@@ -13,7 +13,6 @@ import com.futu.openapi.pb.QotSub.Request;
 import com.futu.openapi.pb.QotUpdateBasicQot.Response;
 import com.futuapi.selfquantification.enums.ErrorCodeEnum;
 import com.futuapi.selfquantification.event.StockQuoteEvent;
-import com.futuapi.selfquantification.handler.StockWebSocketHandler;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;

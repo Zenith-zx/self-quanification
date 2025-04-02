@@ -36,7 +36,7 @@ public class StockWebSocketHandler extends TextWebSocketHandler {
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) {
         try {
-            log.info("收到WebSocket消息: {}", message.getPayload());
+            log.info("StockWebSocketHandler收到WebSocket消息: {}", message.getPayload());
 
             // 解析前端发来的订阅请求
             String payload = message.getPayload();
