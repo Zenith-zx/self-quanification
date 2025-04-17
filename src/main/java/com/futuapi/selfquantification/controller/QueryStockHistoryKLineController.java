@@ -40,7 +40,7 @@ public class QueryStockHistoryKLineController {
         }
 
         // 设置接口超时时间为400ms
-        DeferredResult<String> result = new DeferredResult<>(40000L);
+        DeferredResult<String> result = new DeferredResult<>(400L);
 
         String requestKey = String.format("%s_%s_%s", QueryStockHistoryKLineController.HISTORY_K_LINE_PREFIX, request.getStockCode(), "1");
 
